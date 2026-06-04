@@ -1,2 +1,4 @@
-# CEP-GA4-Mapping-
+# Segment <> GA4 Event Mapping
 Creating the website to view the segment &amp; GA4 mapping events and params
+
+Website link - https://patelneet.github.io/CEP-GA4-Mapping/CEP_GA4_Event_Mapping.html
