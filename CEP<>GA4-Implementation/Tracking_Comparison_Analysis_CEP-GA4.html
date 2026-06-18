@@ -149,19 +149,19 @@ body.locked .app-main,body.locked .app-sidebar,body.locked .sb-toggle{filter:blu
 </head>
 <body>
 <script>try{if(sessionStorage.getItem("schemaDocsUnlocked")!=="1")document.body.classList.add("locked");}catch(e){}</script>
-<button class="sb-toggle" id="sbToggle" aria-label="Toggle menu"><i class="ti ti-menu-2"></i></button>
+<button class="sb-toggle" id="sbToggle" aria-label="Toggle menu"><svg class="ti" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg></button>
 <div class="sb-backdrop" id="sbBackdrop"></div>
 <nav class="app-sidebar" id="appSidebar">
-  <div class="sb-brand"><i class="ti ti-sitemap"></i> Event Schema Docs</div>
+  <div class="sb-brand"><svg class="ti" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="6" rx="1"/><rect x="3" y="15" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><path d="M6 15v-3h12v3"/><path d="M12 9v3"/></svg> Event Schema Docs</div>
   <div class="sb-sub">CEP &harr; GA4 Tracking</div>
-  <a class="nav-link active" href="Tracking_Comparison_Analysis_CEP-GA4.html"><i class="ti ti-chart-bar"></i><span><span class="nl-t">Tracking Comparison Analysis</span><span class="nl-sub">Overview &amp; differences</span></span></a>
-  <a class="nav-link" href="CEP_GA4_Event_Mapping.html"><i class="ti ti-arrow-right"></i><span><span class="nl-t">CEP to GA4 Event Mapping</span><span class="nl-sub">CEP events &rarr; GA4</span></span></a>
-  <a class="nav-link" href="GA4_CEP_Event_Mapping.html"><i class="ti ti-arrow-left"></i><span><span class="nl-t">GA4 to CEP Event Mapping</span><span class="nl-sub">GA4 events &rarr; CEP</span></span></a>
+  <a class="nav-link active" href="Tracking_Comparison_Analysis_CEP-GA4.html"><svg class="ti" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V12"/><path d="M10 20V5"/><path d="M16 20v-9"/><path d="M3 20h18"/></svg><span><span class="nl-t">Tracking Comparison Analysis</span><span class="nl-sub">Overview &amp; differences</span></span></a>
+  <a class="nav-link" href="CEP_GA4_Event_Mapping.html"><svg class="ti" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6l-6 6"/></svg><span><span class="nl-t">CEP to GA4 Event Mapping</span><span class="nl-sub">CEP events &rarr; GA4</span></span></a>
+  <a class="nav-link" href="GA4_CEP_Event_Mapping.html"><svg class="ti" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M11 18l-6 -6l6 -6"/></svg><span><span class="nl-t">GA4 to CEP Event Mapping</span><span class="nl-sub">GA4 events &rarr; CEP</span></span></a>
   <div class="sb-foot">Protected &middot; CEP &lt;&gt; GA4 Implementation</div>
 </nav>
 <div id="gate" class="gate">
   <div class="gate-card" id="gateCard">
-    <div class="gate-ic"><i class="ti ti-lock"></i></div>
+    <div class="gate-ic"><svg class="ti" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
     <h2>Protected document</h2>
     <p>Enter password to view the event schema documentation to track in GA4 &amp; Segment.</p>
     <input type="password" id="gatePw" placeholder="Password" autocomplete="off">
@@ -176,11 +176,11 @@ body.locked .app-main,body.locked .app-sidebar,body.locked .sb-toggle{filter:blu
   <div class="hdr-top">
     <div>
       <h1>CEP ↔ GA4 Mapping — Comparison Analysis</h1>
-      <p class="meta">Cross-referencing GA4→CEP (81 tags) and CEP→GA4 (76 events) &nbsp;·&nbsp; June 2026</p>
+      <p class="meta">Cross-referencing GA4→CEP (81 tags) and CEP→GA4 (55 events) &nbsp;·&nbsp; June 2026</p>
     </div>
     <div class="badges">
       <span class="badge" style="background:var(--blue-bg);color:var(--blue)">GA4→CEP: 81 tags</span>
-      <span class="badge" style="background:var(--purple-bg);color:var(--purple)">CEP→GA4: 76 events</span>
+      <span class="badge" style="background:var(--purple-bg);color:var(--purple)">CEP→GA4: 55 events</span>
     </div>
   </div>
 </div>
@@ -188,15 +188,15 @@ body.locked .app-main,body.locked .app-sidebar,body.locked .sb-toggle{filter:blu
 <!-- ── Scorecards ── -->
 <div class="cards">
   <div class="card" style="border-color:var(--green-bdr)">
-    <div class="card-n" style="color:var(--green)">24</div>
+    <div class="card-n" style="color:var(--green)">25</div>
     <div class="card-l">GA4 events confirmed in both docs — the solid mapped core</div>
   </div>
   <div class="card" style="border-color:var(--red-bdr)">
-    <div class="card-n" style="color:var(--red)">51</div>
+    <div class="card-n" style="color:var(--red)">49</div>
     <div class="card-l">Production GTM tags with <strong>no CEP equivalent</strong> whatsoever</div>
   </div>
   <div class="card" style="border-color:var(--amber-bdr)">
-    <div class="card-n" style="color:var(--amber)">49</div>
+    <div class="card-n" style="color:var(--amber)">27</div>
     <div class="card-l">CEP events with <strong>no GA4 mapping</strong> defined yet</div>
   </div>
   <div class="card" style="border-color:var(--purple-bdr)">
@@ -209,12 +209,12 @@ body.locked .app-main,body.locked .app-sidebar,body.locked .sb-toggle{filter:blu
 <div class="section">
   <div class="section-hd">
     <h2>1 — Production GTM tags with no CEP equivalent</h2>
-    <span class="cnt" style="background:var(--red-bg);color:var(--red)">51 tags</span>
+    <span class="cnt" style="background:var(--red-bg);color:var(--red)">49 tags</span>
   </div>
   <p class="desc">These GA4 events fire in production today (they exist in the GA4→CEP doc) but have no corresponding CEP event defined. They are legacy-only instrumentation — collecting real data with no CEP migration path currently documented.</p>
 
   <div class="alert alert-red" style="margin-bottom:16px">
-    <strong>63% of the GA4→CEP doc (51 of 81 tags) has no CEP mapping.</strong> This is the single largest gap — more than half of your current GTM instrumentation is undocumented on the CEP side.
+    <strong>60% of the GA4→CEP doc (49 of 81 tags) has no CEP mapping.</strong> This is the single largest gap — more than half of your current GTM instrumentation is undocumented on the CEP side.
   </div>
 
   <!-- Cart & Checkout -->
@@ -281,9 +281,9 @@ body.locked .app-main,body.locked .app-sidebar,body.locked .sb-toggle{filter:blu
 
   <!-- Misc -->
   <div class="bucket">
-    <div class="bucket-hd"><span class="bucket-name">⚙ Promotions &amp; Misc UX</span><span class="bucket-n">14 tags</span></div>
+    <div class="bucket-hd"><span class="bucket-name">⚙ Promotions &amp; Misc UX</span><span class="bucket-n">12 tags</span></div>
     <div class="chip-grid">
-      <span class="chip">promo_entry</span><span class="chip">promo_apply</span><span class="chip">pinch_zoom</span><span class="chip">country_selector (×2)</span><span class="chip">payment_method_steps</span><span class="chip">locate_address</span><span class="chip">payment_portal</span><span class="chip">newsletter_signup</span><span class="chip">prod_recom_carousel</span><span class="chip">shop_by_industry</span><span class="chip">resolution_type</span><span class="chip">nav_breadcrumbs</span><span class="chip">order_status_interaction</span>
+      <span class="chip">pinch_zoom</span><span class="chip">country_selector (×2)</span><span class="chip">payment_method_steps</span><span class="chip">locate_address</span><span class="chip">payment_portal</span><span class="chip">newsletter_signup</span><span class="chip">prod_recom_carousel</span><span class="chip">shop_by_industry</span><span class="chip">resolution_type</span><span class="chip">nav_breadcrumbs</span><span class="chip">order_status_interaction</span>
     </div>
   </div>
 </div>
@@ -292,13 +292,10 @@ body.locked .app-main,body.locked .app-sidebar,body.locked .sb-toggle{filter:blu
 <div class="section">
   <div class="section-hd">
     <h2>2 — CEP events mapped to GA4 but absent from GA4→CEP doc</h2>
-    <span class="cnt" style="background:var(--amber-bg);color:var(--amber)">2 events</span>
+    <span class="cnt" style="background:var(--amber-bg);color:var(--amber)">1 event</span>
   </div>
-  <p class="desc">CEP→GA4 defines these GA4 event mappings but there is no corresponding GTM tag documented in the GA4→CEP sheet. Either the GTM tag hasn't been created yet, or it was omitted from the GA4→CEP doc.</p>
+  <p class="desc">CEP→GA4 defines this GA4 event mapping but there is no corresponding GTM tag documented in the GA4→CEP sheet. Either the GTM tag hasn't been created yet, or it was omitted from the GA4→CEP doc.</p>
 
-  <div class="alert alert-amber">
-    <strong>add_payment_info</strong> — mapped by CEP "Checkout Step Completed" (conditional on label containing "payment methods"), but completely missing from the GA4→CEP tag inventory. The add_shipping_info counterpart IS in the GA4→CEP doc — so this is likely a documentation gap rather than an implementation gap.
-  </div>
   <div class="alert alert-amber">
     <strong>file_download</strong> — CEP maps "File Downloaded" to this GA4 auto-collected event, but no corresponding GTM tag appears in the GA4→CEP doc. Since file_download is auto-collected in GA4 (when enabled), there may intentionally be no GTM tag — but it should at minimum be noted in the GA4→CEP sheet.
   </div>
@@ -308,16 +305,24 @@ body.locked .app-main,body.locked .app-sidebar,body.locked .sb-toggle{filter:blu
 <div class="section">
   <div class="section-hd">
     <h2>3 — CEP events with no GA4 mapping (CEP-Segment only)</h2>
-    <span class="cnt" style="background:var(--amber-bg);color:var(--amber)">49 events</span>
+    <span class="cnt" style="background:var(--amber-bg);color:var(--amber)">27 events</span>
   </div>
-  <p class="desc">These 49 CEP events send to the data layer and Segment only — no GA4 event is defined for them. Grouped by framework below with coverage percentages.</p>
+  <p class="desc">These 27 CEP events send to the data layer and Segment only — no GA4 event is defined for them. Grouped by framework below with coverage percentages.</p>
 
   <!-- Coverage bars -->
   <div style="background:var(--bg-2);border-radius:var(--rl);padding:16px;border:.5px solid var(--bdr);margin-bottom:1rem">
 
     <div class="prog-wrap">
-      <div class="prog-label"><span>Chat Interaction</span><span style="color:var(--red)">3 / 27 mapped (11%)</span></div>
-      <div class="prog-bar"><div class="prog-fill" style="width:11%;background:var(--red)"></div></div>
+      <div class="prog-label"><span>Chat Interaction</span><span style="color:var(--green)">1 / 1 mapped (100%)</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:100%;background:var(--green)"></div></div>
+    </div>
+    <div class="prog-wrap">
+      <div class="prog-label"><span>Coupon</span><span style="color:var(--green)">3 / 4 mapped (75%)</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:75%;background:var(--green)"></div></div>
+    </div>
+    <div class="prog-wrap">
+      <div class="prog-label"><span>Site-wide Promo bar</span><span style="color:var(--red)">0 / 1 mapped (0%)</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:1%;background:var(--red)"></div></div>
     </div>
 
     <div class="prog-wrap">
@@ -362,8 +367,7 @@ body.locked .app-main,body.locked .app-sidebar,body.locked .sb-toggle{filter:blu
   </div>
 
   <div class="alert alert-red">
-    <strong>Chat Interaction is the biggest GA4 blind spot.</strong> 27 CEP events defined, only 3 have GA4 mappings (session started, user message, chat closed). The other 24 — including all feedback loops, escalation, flow steps, CTA views, and privacy consent — are invisible in GA4. This makes it impossible to measure bot funnel conversion or session quality in GA4.
-  </div>
+    <strong>Chat Interaction — now consolidated.</strong> The framework was simplified from ~27 granular sub-events to a single <em>Chat Initiated</em> event, mapped 1:1 to the GA4 <code>chat_interaction</code> event. Action differentiation — open, agent established, message sent, chat closed — now lives in the CEP <code>label</code> property rather than separate events. GA4 still receives only a coarse-grained chat signal; full action-level detail lives in Segment/BQ via the label.</div>
 
   <div class="alert alert-amber">
     <strong>Sign-In &amp; Account:</strong> 12 CEP events, only login (User Sign-In Succeeded) lands in GA4. All 11 remaining events — failures, dismissals, account creation, password reset — are Segment-only. You can see the success but not the failure modes in GA4.
@@ -416,17 +420,17 @@ body.locked .app-main,body.locked .app-sidebar,body.locked .sb-toggle{filter:blu
 
   <!-- Chat interaction asymmetry -->
   <div class="alert alert-blue">
-    <strong>Chat Interaction coverage asymmetry is by design — but worth calling out:</strong> GA4→CEP shows chat_interaction mapping to 3 CEP events (session start, user message, chat close). CEP→GA4 shows these same 3 GA4 mappings but defines 24 additional events that are Segment-only. The clear implication is that GA4 is intentionally receiving only a coarse-grained chat signal, with full session-level detail living in Segment/BQ. This is a valid architectural choice but it means GA4 cannot answer "did the bot resolve the issue?" without a data join.
+    <strong>Chat Interaction is now a single consolidated signal:</strong> both docs agree that <code>chat_interaction</code> maps to <em>Chat Initiated</em>. The previous ~27 granular sub-events were collapsed into one event, with action detail (open, message, close, escalation) carried in the <code>label</code> property and flowing to Segment/BQ. GA4 therefore still cannot answer &quot;did the bot resolve the issue?&quot; without parsing label or a data join.
   </div>
 
   <!-- add_payment_info missing -->
   <div class="alert alert-amber">
-    <strong>add_shipping_info is in GA4→CEP but add_payment_info is not.</strong> Both are fired by the same CEP event (Checkout Step Completed) with a label condition. The shipping step has a GTM tag but the payment step does not appear in the GA4→CEP sheet. Either the tag was missed in documentation or the payment step uses a different mechanism (checkout_payment_interaction, which has no CEP mapping either). The checkout funnel is incomplete in both directions.
+    <strong>The checkout payment leg is uncovered on the CEP side.</strong> Checkout Step Completed now maps only to add_shipping_info — the earlier conditional add_payment_info mapping has been removed. add_payment_info therefore has no CEP mapping, and the payment micro-interaction (checkout_payment_interaction) has no CEP equivalent either. The shipping leg is covered end-to-end; the payment leg is not.
   </div>
 
   <!-- New frameworks not yet wired -->
   <div class="alert alert-blue">
-    <strong>Three entirely new frameworks (Chat, Survey, Ratings &amp; Reviews) are CEP-defined but minimally wired to GA4.</strong> This pattern is consistent with a "CEP-first, GA4-second" rollout — the event taxonomy is defined before the GA4 implementation is complete. Worth tracking as a migration backlog.
+    <strong>Newer frameworks vary in GA4 coverage: the new Coupon framework (3/4) is now wired to GA4 via promo_entry / promo_apply, while Survey Submission (0/2), most of Ratings &amp; Reviews (1/4) and the new Site-wide Promo bar (0/1) remain Segment-only.</strong> This pattern is consistent with a "CEP-first, GA4-second" rollout — the event taxonomy is defined before the GA4 implementation is complete. Worth tracking as a migration backlog.
   </div>
 
   <!-- Ecommerce core is solid -->
@@ -461,7 +465,7 @@ body.locked .app-main,body.locked .app-sidebar,body.locked .sb-toggle{filter:blu
       </tr>
       <tr>
         <td><span class="mono">add_payment_info</span></td>
-        <td>CEP defines it, no GTM tag exists in GA4→CEP doc. Checkout funnel is incomplete.</td>
+        <td>No CEP mapping (Checkout Step Completed maps to add_shipping_info only). Payment leg of checkout uncovered on CEP side.</td>
         <td><span class="chip chip-red">High</span></td>
       </tr>
       <tr>
@@ -524,7 +528,7 @@ body.locked .app-main,body.locked .app-sidebar,body.locked .sb-toggle{filter:blu
 </div>
 
 <div class="foot">
-  Analysis generated June 2026 &nbsp;·&nbsp; Based on GA4→CEP (81 tags, 30 mapped) and CEP→GA4 (76 events, 27 with GA4 mapping) &nbsp;·&nbsp; 24 GA4 events confirmed in both documents
+  Analysis generated June 2026 &nbsp;·&nbsp; Based on GA4→CEP (81 tags, 32 mapped) and CEP→GA4 (55 events, 28 with GA4 mapping) &nbsp;·&nbsp; 24 GA4 events confirmed in both documents
 </div>
 
 </div><!-- /.app-main -->
