@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CEP ↔ GA4 Mapping — Comparison Analysis</title>
+<style>
+:root{
+  --bg:#ffffff;--bg-2:#f5f4f0;--bg-3:#eceae5;
+  --txt:#1a1a18;--txt-2:#73726c;--txt-3:#a09e98;
+  --bdr:rgba(0,0,0,.09);--bdr-2:rgba(0,0,0,.16);
+  --red:#C0392B;--red-bg:#FDF0EE;--red-bdr:#E8A99F;
+  --amber:#8B5E00;--amber-bg:#FFF8E6;--amber-bdr:#F0D080;
+  --green:#2D6A1F;--green-bg:#EAF3DE;--green-bdr:#A8D080;
+  --blue:#0C447C;--blue-bg:#E6F1FB;--blue-bdr:#378ADD;
+  --purple:#3C3489;--purple-bg:#EEEDFE;--purple-bdr:#9B96E8;
+  --r:8px;--rl:12px;
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#1c1c1a;--bg-2:#252523;--bg-3:#2e2e2b;
+  --txt:#e8e7e0;--txt-2:#888780;--txt-3:#5a5955;
+  --bdr:rgba(255,255,255,.09);--bdr-2:rgba(255,255,255,.16);
+  --red:#E87060;--red-bg:#3A100A;--red-bdr:#7A2518;
+  --amber:#F0B840;--amber-bg:#2A1E00;--amber-bdr:#6B4800;
+  --green:#8FCC60;--green-bg:#0F2A05;--green-bdr:#2D5A10;
+  --blue:#85B7EB;--blue-bg:#042C53;--blue-bdr:#1A5090;
+  --purple:#CECBF6;--purple-bg:#26215C;--purple-bdr:#4A4590;
+}}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;padding:2.5rem 1.5rem;max-width:1000px;margin:0 auto}
+
+/* Header */
+.hdr{border-bottom:.5px solid var(--bdr-2);padding-bottom:1.5rem;margin-bottom:2rem}
+.hdr-top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:.75rem}
+h1{font-size:24px;font-weight:500;letter-spacing:-.3px}
+.meta{font-size:13px;color:var(--txt-2);margin-top:4px}
+.badges{display:flex;gap:8px;flex-wrap:wrap}
+.badge{padding:4px 10px;border-radius:6px;font-size:12px;font-weight:500;white-space:nowrap}
+
+/* Summary scorecards */
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:2.5rem}
+@media(max-width:640px){.cards{grid-template-columns:1fr 1fr}}
+.card{border-radius:var(--rl);padding:16px;border:.5px solid var(--bdr)}
+.card-n{font-size:32px;font-weight:600;line-height:1;margin-bottom:4px}
+.card-l{font-size:12px;color:var(--txt-2);line-height:1.4}
+
+/* Sections */
+.section{margin-bottom:2.5rem}
+.section-hd{display:flex;align-items:center;gap:10px;margin-bottom:1rem;padding-bottom:.6rem;border-bottom:.5px solid var(--bdr-2)}
+.section-hd h2{font-size:16px;font-weight:500}
+.section-hd .cnt{font-size:12px;padding:2px 8px;border-radius:12px;font-weight:600}
+.desc{font-size:13px;color:var(--txt-2);margin-bottom:1rem;line-height:1.6}
+
+/* Alert boxes */
+.alert{border-radius:var(--r);padding:12px 14px;margin-bottom:10px;font-size:13px;line-height:1.6;border:.5px solid}
+.alert-red   {background:var(--red-bg);   border-color:var(--red-bdr);   color:var(--red)}
+.alert-amber {background:var(--amber-bg); border-color:var(--amber-bdr); color:var(--amber)}
+.alert-green {background:var(--green-bg); border-color:var(--green-bdr); color:var(--green)}
+.alert-blue  {background:var(--blue-bg);  border-color:var(--blue-bdr);  color:var(--blue)}
+.alert-purple{background:var(--purple-bg);border-color:var(--purple-bdr);color:var(--purple)}
+.alert strong{font-weight:600}
+.alert .sub{font-size:12px;opacity:.85;margin-top:4px}
+
+/* Tag grid / chips */
+.chip-grid{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.chip{display:inline-block;padding:2px 9px;border-radius:10px;font-size:11px;font-family:'Menlo','Consolas',monospace;background:var(--bg-2);border:.5px solid var(--bdr-2);color:var(--txt-2)}
+.chip-red{background:var(--red-bg);border-color:var(--red-bdr);color:var(--red)}
+.chip-amber{background:var(--amber-bg);border-color:var(--amber-bdr);color:var(--amber)}
+.chip-green{background:var(--green-bg);border-color:var(--green-bdr);color:var(--green)}
+.chip-blue{background:var(--blue-bg);border-color:var(--blue-bdr);color:var(--blue)}
+.chip-purple{background:var(--purple-bg);border-color:var(--purple-bdr);color:var(--purple)}
+
+/* Theme buckets */
+.bucket{background:var(--bg-2);border-radius:var(--r);padding:12px 14px;margin-bottom:8px;border:.5px solid var(--bdr)}
+.bucket-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.bucket-name{font-size:13px;font-weight:500}
+.bucket-n{font-size:11px;background:var(--bg-3);border-radius:8px;padding:1px 7px;color:var(--txt-2)}
+
+/* Two-col comparison */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}
+@media(max-width:580px){.cmp{grid-template-columns:1fr}}
+.cmp-col{background:var(--bg-2);border-radius:var(--r);padding:11px 13px;border:.5px solid var(--bdr)}
+.cmp-col-hd{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--txt-2);margin-bottom:6px}
+.cmp-val{font-family:'Menlo','Consolas',monospace;font-size:12px;color:var(--txt)}
+
+/* Progress bar */
+.prog-wrap{margin-bottom:12px}
+.prog-label{display:flex;justify-content:space-between;font-size:12px;color:var(--txt-2);margin-bottom:4px}
+.prog-bar{height:8px;border-radius:4px;background:var(--bg-3);overflow:hidden}
+.prog-fill{height:100%;border-radius:4px;transition:width .4s}
+
+/* Table */
+.tbl{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+.tbl th{padding:6px 10px;font-size:11px;font-weight:500;color:var(--txt-2);text-transform:uppercase;letter-spacing:.04em;border-bottom:.5px solid var(--bdr-2);text-align:left;background:var(--bg-2)}
+.tbl td{padding:7px 10px;border-bottom:.5px solid var(--bdr);vertical-align:top}
+.tbl tr:last-child td{border-bottom:none}
+.mono{font-family:'Menlo','Consolas',monospace;font-size:11px}
+
+/* Footer */
+.foot{font-size:12px;color:var(--txt-3);padding-top:1.5rem;border-top:.5px solid var(--bdr);margin-top:2rem}
+
+/* ===== left sidebar nav + password gate (added) ===== */
+:root{--sbw:250px}
+body{max-width:none!important;margin:0!important;padding:2rem 2rem 2.6rem calc(var(--sbw) + 32px)!important}
+.app-main{max-width:1080px;margin:0 auto}
+.app-sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sbw);background:var(--bg-2);border-right:.5px solid var(--bdr-2);padding:20px 14px;overflow-y:auto;z-index:90;display:flex;flex-direction:column;transition:transform .25s ease}
+.sb-brand{font-size:13.5px;font-weight:600;color:var(--txt);display:flex;align-items:center;gap:8px;padding:2px 10px 12px}
+.sb-brand .ti{font-size:19px;color:var(--txt-info,#185FA5)}
+.sb-sub{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--txt-3);padding:0 10px 10px;margin-bottom:6px;border-bottom:.5px solid var(--bdr)}
+.nav-link{display:flex;align-items:flex-start;gap:10px;padding:10px 11px;margin-top:5px;border-radius:8px;color:var(--txt-2);text-decoration:none;transition:background .12s,color .12s}
+.nav-link:hover{background:var(--bg);color:var(--txt)}
+.nav-link.active{background:var(--txt);color:var(--bg)}
+.nav-link .ti{font-size:16px;margin-top:1px;flex:none}
+.nl-t{font-size:13px;font-weight:500;line-height:1.3}
+.nl-sub{display:block;font-size:10.5px;color:var(--txt-3);margin-top:2px;line-height:1.3}
+.nav-link.active .nl-sub,.nav-link.active .ti{color:var(--bg);opacity:.7}
+.sb-foot{margin-top:auto;padding:12px 10px 2px;font-size:10px;color:var(--txt-3);border-top:.5px solid var(--bdr)}
+.sb-toggle{position:fixed;top:14px;left:14px;z-index:95;width:40px;height:40px;border-radius:9px;border:.5px solid var(--bdr-2);background:var(--bg);color:var(--txt);display:none;align-items:center;justify-content:center;cursor:pointer;font-size:21px;box-shadow:0 2px 10px rgba(0,0,0,.10)}
+.sb-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:85;display:none}
+.sb-backdrop.show{display:block}
+@media(max-width:860px){
+  body{padding:4.6rem 1.2rem 2rem 1.2rem!important}
+  .app-sidebar{transform:translateX(-100%);box-shadow:0 0 50px rgba(0,0,0,.35)}
+  .app-sidebar.open{transform:translateX(0)}
+  .sb-toggle{display:flex}
+}
+/* password gate */
+body.locked{overflow:hidden}
+body.locked .app-main,body.locked .app-sidebar,body.locked .sb-toggle{filter:blur(7px);pointer-events:none;user-select:none}
+.gate{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(20,20,18,.5);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.gate.hide{display:none}
+.gate-card{background:var(--bg);color:var(--txt);border:.5px solid var(--bdr-2);border-radius:var(--rl,12px);padding:30px 28px;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.4);text-align:center}
+.gate-ic{width:48px;height:48px;border-radius:50%;background:var(--bg-2);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:23px;color:var(--txt-2)}
+.gate-card h2{font-size:18px;font-weight:500;margin-bottom:7px}
+.gate-card p{font-size:13px;color:var(--txt-2);margin-bottom:18px;line-height:1.55}
+.gate-card input{width:100%;padding:11px 13px;font-size:14px;font-family:inherit;color:var(--txt);background:var(--bg-2);border:1px solid var(--bdr-2);border-radius:var(--r,8px);outline:none;transition:border-color .15s}
+.gate-card input:focus{border-color:var(--bdr-info,#378ADD)}
+.gate-card button{width:100%;margin-top:12px;padding:11px 13px;font-size:14px;font-weight:500;font-family:inherit;color:var(--bg);background:var(--txt);border:none;border-radius:var(--r,8px);cursor:pointer;transition:opacity .15s}
+.gate-card button:hover{opacity:.85}
+.gate-err{min-height:16px;margin-top:10px;font-size:12px;color:#C0341D;visibility:hidden}
+.gate-err.show{visibility:visible}
+.gate-card.shake{animation:gshake .4s}
+@keyframes gshake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+@media(prefers-color-scheme:dark){.gate-err{color:#F4A28C}}
+@media print{.app-sidebar,.sb-toggle,.sb-backdrop,#gate{display:none!important}body{padding:1rem!important}}
+
+</style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+</head>
+<body>
+<script>try{if(sessionStorage.getItem("schemaDocsUnlocked")!=="1")document.body.classList.add("locked");}catch(e){}</script>
+<button class="sb-toggle" id="sbToggle" aria-label="Toggle menu"><i class="ti ti-menu-2"></i></button>
+<div class="sb-backdrop" id="sbBackdrop"></div>
+<nav class="app-sidebar" id="appSidebar">
+  <div class="sb-brand"><i class="ti ti-sitemap"></i> Event Schema Docs</div>
+  <div class="sb-sub">CEP &harr; GA4 Tracking</div>
+  <a class="nav-link active" href="Tracking_Comparison_Analysis_CEP-GA4.html"><i class="ti ti-chart-bar"></i><span><span class="nl-t">Tracking Comparison Analysis</span><span class="nl-sub">Overview &amp; differences</span></span></a>
+  <a class="nav-link" href="CEP_GA4_Event_Mapping.html"><i class="ti ti-arrow-right"></i><span><span class="nl-t">CEP to GA4 Event Mapping</span><span class="nl-sub">CEP events &rarr; GA4</span></span></a>
+  <a class="nav-link" href="GA4_CEP_Event_Mapping.html"><i class="ti ti-arrow-left"></i><span><span class="nl-t">GA4 to CEP Event Mapping</span><span class="nl-sub">GA4 events &rarr; CEP</span></span></a>
+  <div class="sb-foot">Protected &middot; CEP &lt;&gt; GA4 Implementation</div>
+</nav>
+<div id="gate" class="gate">
+  <div class="gate-card" id="gateCard">
+    <div class="gate-ic"><i class="ti ti-lock"></i></div>
+    <h2>Protected document</h2>
+    <p>Enter password to view the event schema documentation to track in GA4 &amp; Segment.</p>
+    <input type="password" id="gatePw" placeholder="Password" autocomplete="off">
+    <button type="button" id="gateBtn">Unlock</button>
+    <div class="gate-err" id="gateErr">Incorrect password. Please try again.</div>
+  </div>
+</div>
+<div class="app-main">
+
+
+<div class="hdr">
+  <div class="hdr-top">
+    <div>
+      <h1>CEP ↔ GA4 Mapping — Comparison Analysis</h1>
+      <p class="meta">Cross-referencing GA4→CEP (81 tags) and CEP→GA4 (76 events) &nbsp;·&nbsp; June 2026</p>
+    </div>
+    <div class="badges">
+      <span class="badge" style="background:var(--blue-bg);color:var(--blue)">GA4→CEP: 81 tags</span>
+      <span class="badge" style="background:var(--purple-bg);color:var(--purple)">CEP→GA4: 76 events</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── Scorecards ── -->
+<div class="cards">
+  <div class="card" style="border-color:var(--green-bdr)">
+    <div class="card-n" style="color:var(--green)">24</div>
+    <div class="card-l">GA4 events confirmed in both docs — the solid mapped core</div>
+  </div>
+  <div class="card" style="border-color:var(--red-bdr)">
+    <div class="card-n" style="color:var(--red)">51</div>
+    <div class="card-l">Production GTM tags with <strong>no CEP equivalent</strong> whatsoever</div>
+  </div>
+  <div class="card" style="border-color:var(--amber-bdr)">
+    <div class="card-n" style="color:var(--amber)">49</div>
+    <div class="card-l">CEP events with <strong>no GA4 mapping</strong> defined yet</div>
+  </div>
+  <div class="card" style="border-color:var(--purple-bdr)">
+    <div class="card-n" style="color:var(--purple)">5</div>
+    <div class="card-l">Naming inconsistencies or direct conflicts between the two docs</div>
+  </div>
+</div>
+
+<!-- ── SECTION 1: Missing from CEP ── -->
+<div class="section">
+  <div class="section-hd">
+    <h2>1 — Production GTM tags with no CEP equivalent</h2>
+    <span class="cnt" style="background:var(--red-bg);color:var(--red)">51 tags</span>
+  </div>
+  <p class="desc">These GA4 events fire in production today (they exist in the GA4→CEP doc) but have no corresponding CEP event defined. They are legacy-only instrumentation — collecting real data with no CEP migration path currently documented.</p>
+
+  <div class="alert alert-red" style="margin-bottom:16px">
+    <strong>63% of the GA4→CEP doc (51 of 81 tags) has no CEP mapping.</strong> This is the single largest gap — more than half of your current GTM instrumentation is undocumented on the CEP side.
+  </div>
+
+  <!-- Cart & Checkout -->
+  <div class="bucket">
+    <div class="bucket-hd"><span class="bucket-name">🛒 Cart &amp; Checkout</span><span class="bucket-n">9 tags</span></div>
+    <div class="desc" style="margin-bottom:8px">The most business-critical uncovered cluster. Includes cart open/close modals, checkout steps for shipping and payment, tier select interaction, reorder, and update_cart. CEP covers the broad ecommerce funnel (view_cart → purchase) but misses all the micro-interactions within checkout.</div>
+    <div class="chip-grid">
+      <span class="chip chip-red">cart_interaction</span><span class="chip chip-red">checkout_shipping_interaction</span><span class="chip chip-red">checkout_payment_interaction</span><span class="chip chip-red">cart_modal</span><span class="chip chip-red">cart_modal_close</span><span class="chip chip-red">shipping_tier_select</span><span class="chip chip-red">update_cart</span><span class="chip chip-red">reorder</span>
+    </div>
+  </div>
+
+  <!-- PDP / Studio / Customizer -->
+  <div class="bucket">
+    <div class="bucket-hd"><span class="bucket-name">🎨 PDP / Studio / Customizer</span><span class="bucket-n">6 tags</span></div>
+    <div class="desc" style="margin-bottom:8px">Deep customiser interactions — artwork review, customize_view (the entry state), edit_logo, artwork tips, and the final studio step — are all missing from CEP. CEP covers attribute selection and option configuration but not these upstream/downstream customiser states.</div>
+    <div class="chip-grid">
+      <span class="chip chip-red">customize_view</span><span class="chip chip-red">customize_final</span><span class="chip chip-red">artwork_review_tool</span><span class="chip chip-red">edit_logo</span><span class="chip chip-red">pdp_default_quantity</span><span class="chip chip-red">artwork_tips_interaction</span>
+    </div>
+  </div>
+
+  <!-- PCC -->
+  <div class="bucket">
+    <div class="bucket-hd"><span class="bucket-name">🖼 PCC (Customize Later)</span><span class="bucket-n">4 tags</span></div>
+    <div class="desc" style="margin-bottom:8px">The entire Customize Later / PCC flow (landing, artwork, final submit + a generic interaction tag) has no CEP equivalent. This is a distinct product journey with zero coverage.</div>
+    <div class="chip-grid">
+      <span class="chip chip-red">pcc_customize_later_interaction (×4 tags)</span>
+    </div>
+  </div>
+
+  <!-- PLP / Discovery -->
+  <div class="bucket">
+    <div class="bucket-hd"><span class="bucket-name">🔍 PLP / Discovery</span><span class="bucket-n">7 tags</span></div>
+    <div class="desc" style="margin-bottom:8px">CEP has no events for product list page utility actions: Load More, See More, site search results, promotional nav clicks, visual nav, More Ways to Shop, or Promo Click (select_promotion). These are real discovery-funnel signals with no CEP path.</div>
+    <div class="chip-grid">
+      <span class="chip chip-red">load_more</span><span class="chip chip-red">plp_seemore</span><span class="chip chip-red">site_search_result</span><span class="chip chip-red">nav_promo_click</span><span class="chip chip-red">visual_nav_click</span><span class="chip chip-red">morewaystoshop_click</span><span class="chip chip-red">select_promotion</span>
+    </div>
+  </div>
+
+  <!-- Account / Auth -->
+  <div class="bucket">
+    <div class="bucket-hd"><span class="bucket-name">👤 Account / Auth (GA4-only layer)</span><span class="bucket-n">3 tags</span></div>
+    <div class="desc" style="margin-bottom:8px">sign-in_interaction, sign_out, and my_account have no CEP counterparts. Interesting because the CEP Sign-In &amp; Account framework is very detailed (11 events) yet these three legacy tags sit completely outside it.</div>
+    <div class="chip-grid">
+      <span class="chip chip-red">sign-in_interaction</span><span class="chip chip-red">sign_out</span><span class="chip chip-red">my_account</span>
+    </div>
+  </div>
+
+  <!-- Consent & Privacy -->
+  <div class="bucket">
+    <div class="bucket-hd"><span class="bucket-name">🔒 Consent &amp; Privacy</span><span class="bucket-n">4 tags</span></div>
+    <div class="desc" style="margin-bottom:8px">Four consent/privacy tags (CookiePro engagement, user consent preferences, DNS opt-in, do_not_track) fire with no CEP framework covering them. Given consent's legal relevance this is worth flagging.</div>
+    <div class="chip-grid">
+      <span class="chip chip-red">consent_engagement</span><span class="chip chip-red">user_consent</span><span class="chip chip-red">dns_form_interaction</span><span class="chip chip-red">do_not_track</span>
+    </div>
+  </div>
+
+  <!-- Errors & Diagnostics -->
+  <div class="bucket">
+    <div class="bucket-hd"><span class="bucket-name">⚠ Errors &amp; Diagnostics</span><span class="bucket-n">3 tags</span></div>
+    <div class="chip-grid">
+      <span class="chip chip-red">gtm_errors</span><span class="chip chip-red">web_errors</span><span class="chip chip-red">web_error_payment_decline</span>
+    </div>
+  </div>
+
+  <!-- Misc -->
+  <div class="bucket">
+    <div class="bucket-hd"><span class="bucket-name">⚙ Promotions &amp; Misc UX</span><span class="bucket-n">14 tags</span></div>
+    <div class="chip-grid">
+      <span class="chip">promo_entry</span><span class="chip">promo_apply</span><span class="chip">pinch_zoom</span><span class="chip">country_selector (×2)</span><span class="chip">payment_method_steps</span><span class="chip">locate_address</span><span class="chip">payment_portal</span><span class="chip">newsletter_signup</span><span class="chip">prod_recom_carousel</span><span class="chip">shop_by_industry</span><span class="chip">resolution_type</span><span class="chip">nav_breadcrumbs</span><span class="chip">order_status_interaction</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 2: Missing from GA4→CEP ── -->
+<div class="section">
+  <div class="section-hd">
+    <h2>2 — CEP events mapped to GA4 but absent from GA4→CEP doc</h2>
+    <span class="cnt" style="background:var(--amber-bg);color:var(--amber)">2 events</span>
+  </div>
+  <p class="desc">CEP→GA4 defines these GA4 event mappings but there is no corresponding GTM tag documented in the GA4→CEP sheet. Either the GTM tag hasn't been created yet, or it was omitted from the GA4→CEP doc.</p>
+
+  <div class="alert alert-amber">
+    <strong>add_payment_info</strong> — mapped by CEP "Checkout Step Completed" (conditional on label containing "payment methods"), but completely missing from the GA4→CEP tag inventory. The add_shipping_info counterpart IS in the GA4→CEP doc — so this is likely a documentation gap rather than an implementation gap.
+  </div>
+  <div class="alert alert-amber">
+    <strong>file_download</strong> — CEP maps "File Downloaded" to this GA4 auto-collected event, but no corresponding GTM tag appears in the GA4→CEP doc. Since file_download is auto-collected in GA4 (when enabled), there may intentionally be no GTM tag — but it should at minimum be noted in the GA4→CEP sheet.
+  </div>
+</div>
+
+<!-- ── SECTION 3: CEP events with no GA4 ── -->
+<div class="section">
+  <div class="section-hd">
+    <h2>3 — CEP events with no GA4 mapping (CEP-Segment only)</h2>
+    <span class="cnt" style="background:var(--amber-bg);color:var(--amber)">49 events</span>
+  </div>
+  <p class="desc">These 49 CEP events send to the data layer and Segment only — no GA4 event is defined for them. Grouped by framework below with coverage percentages.</p>
+
+  <!-- Coverage bars -->
+  <div style="background:var(--bg-2);border-radius:var(--rl);padding:16px;border:.5px solid var(--bdr);margin-bottom:1rem">
+
+    <div class="prog-wrap">
+      <div class="prog-label"><span>Chat Interaction</span><span style="color:var(--red)">3 / 27 mapped (11%)</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:11%;background:var(--red)"></div></div>
+    </div>
+
+    <div class="prog-wrap">
+      <div class="prog-label"><span>Sign-In &amp; Account</span><span style="color:var(--red)">1 / 12 mapped (8%)</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:8%;background:var(--red)"></div></div>
+    </div>
+
+    <div class="prog-wrap">
+      <div class="prog-label"><span>Survey Submission</span><span style="color:var(--red)">0 / 2 mapped (0%)</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:1%;background:var(--red)"></div></div>
+    </div>
+
+    <div class="prog-wrap">
+      <div class="prog-label"><span>Experimentation</span><span style="color:var(--red)">0 / 3 mapped (0%)</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:1%;background:var(--red)"></div></div>
+    </div>
+
+    <div class="prog-wrap">
+      <div class="prog-label"><span>Favorites</span><span style="color:var(--amber)">1 / 3 mapped (33%)</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:33%;background:var(--amber)"></div></div>
+    </div>
+
+    <div class="prog-wrap">
+      <div class="prog-label"><span>Ratings &amp; Reviews</span><span style="color:var(--amber)">1 / 4 mapped (25%)</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:25%;background:var(--amber)"></div></div>
+    </div>
+
+    <div class="prog-wrap">
+      <div class="prog-label"><span>Feedback</span><span style="color:var(--amber)">2 / 4 mapped (50%)</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:50%;background:var(--amber)"></div></div>
+    </div>
+
+    <div class="prog-wrap">
+      <div class="prog-label"><span>Product Funnel</span><span style="color:var(--green)">10 / 11 mapped (91%)</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:91%;background:var(--green)"></div></div>
+    </div>
+
+    <div class="prog-wrap" style="margin-bottom:0">
+      <div class="prog-label"><span>Navigation / Media / Pop-up / Page ID / File Download</span><span style="color:var(--green)">Fully or near-fully mapped</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:90%;background:var(--green)"></div></div>
+    </div>
+  </div>
+
+  <div class="alert alert-red">
+    <strong>Chat Interaction is the biggest GA4 blind spot.</strong> 27 CEP events defined, only 3 have GA4 mappings (session started, user message, chat closed). The other 24 — including all feedback loops, escalation, flow steps, CTA views, and privacy consent — are invisible in GA4. This makes it impossible to measure bot funnel conversion or session quality in GA4.
+  </div>
+
+  <div class="alert alert-amber">
+    <strong>Sign-In &amp; Account:</strong> 12 CEP events, only login (User Sign-In Succeeded) lands in GA4. All 11 remaining events — failures, dismissals, account creation, password reset — are Segment-only. You can see the success but not the failure modes in GA4.
+  </div>
+
+  <div class="alert alert-amber">
+    <strong>Experimentation framework:</strong> All 3 events (Experiment Viewed, Flag Viewed, Clicked) have no GA4 mapping. A/B test exposure data is entirely absent from GA4, making GA4-based experiment analysis reliant on external stitching rather than native events.
+  </div>
+
+  <div class="alert alert-amber">
+    <strong>Survey &amp; Ratings new frameworks:</strong> Survey Submission (2 events, 0 GA4) and 3 of 4 Ratings &amp; Reviews events have no GA4 mapping. These are newly defined frameworks still awaiting GA4 implementation.
+  </div>
+</div>
+
+<!-- ── SECTION 4: Naming conflicts ── -->
+<div class="section">
+  <div class="section-hd">
+    <h2>4 — Naming inconsistencies &amp; conflicts between the two docs</h2>
+    <span class="cnt" style="background:var(--purple-bg);color:var(--purple)">5 cases</span>
+  </div>
+  <p class="desc">The same underlying mapping is described with different CEP event names across the two documents. These are mostly cosmetic (slash vs space differences) but one — sort_by — is a genuine conflict.</p>
+
+  <!-- Fly-Out naming drift -->
+  <div class="alert alert-purple">
+    <strong>Fly-Out naming drift (4 events):</strong> GA4→CEP uses "Fly-Out Viewed / Pop-Up Viewed", "Fly-Out Closed / Pop-Up Closed", "Fly-Out Clicked / Pop-Up Clicked" — CEP→GA4 uses "Fly-Out / Pop-Up Viewed", "Fly-Out / Pop-Up Closed", "Fly-Out / Pop-Up Clicked". The word order differs. Same for artwork_tips_popup and paypal_paylater_popup. Low risk but will cause string-match issues in any automated tooling.
+  </div>
+
+  <!-- contact_us name -->
+  <div class="alert alert-purple">
+    <strong>contact_us — negative feedback event name differs:</strong> GA4→CEP calls it "Feedback Component Engaged (when negative feedback is submitted with a response)" — CEP→GA4 calls it "Feedback Component Engaged (negative)". Same event, very different names.
+  </div>
+
+  <!-- sort_by conflict — genuine gap -->
+  <div class="alert alert-red">
+    <strong>sort_by — genuine conflict:</strong> CEP→GA4 maps "Fly-Out / Pop-Up Clicked" to sort_by as one of its GA4 events. GA4→CEP marks sort_by as "No direct CEP mapping". The two docs directly contradict each other on this mapping. Needs a single source-of-truth decision.
+  </div>
+</div>
+
+<!-- ── SECTION 5: Interesting observations ── -->
+<div class="section">
+  <div class="section-hd">
+    <h2>5 — Other interesting observations</h2>
+  </div>
+
+  <!-- pdp_interaction overload -->
+  <div class="alert alert-blue">
+    <strong>pdp_interaction is fired by 5 different GTM tags</strong> — Tier Select, Attr_Select, Prod Text, Reviews-Top, and a generic PDP Interaction tag. All five route to the same GA4 event. On the CEP side it maps to both "Attribute Selected" and "Ratings Reviews Engaged". This single event name is doing a lot of work: product options, text editing, review CTA clicks, and tier selection all collapse into one. This is a reporting clarity risk — knowing that pdp_interaction fired tells you very little without gtm_event_sub_name.
+    <div class="sub">Recommendation: ensure gtm_event_sub_name is always populated so this event can be meaningfully segmented in BigQuery / GA4 explorations.</div>
+  </div>
+
+  <!-- Chat interaction asymmetry -->
+  <div class="alert alert-blue">
+    <strong>Chat Interaction coverage asymmetry is by design — but worth calling out:</strong> GA4→CEP shows chat_interaction mapping to 3 CEP events (session start, user message, chat close). CEP→GA4 shows these same 3 GA4 mappings but defines 24 additional events that are Segment-only. The clear implication is that GA4 is intentionally receiving only a coarse-grained chat signal, with full session-level detail living in Segment/BQ. This is a valid architectural choice but it means GA4 cannot answer "did the bot resolve the issue?" without a data join.
+  </div>
+
+  <!-- add_payment_info missing -->
+  <div class="alert alert-amber">
+    <strong>add_shipping_info is in GA4→CEP but add_payment_info is not.</strong> Both are fired by the same CEP event (Checkout Step Completed) with a label condition. The shipping step has a GTM tag but the payment step does not appear in the GA4→CEP sheet. Either the tag was missed in documentation or the payment step uses a different mechanism (checkout_payment_interaction, which has no CEP mapping either). The checkout funnel is incomplete in both directions.
+  </div>
+
+  <!-- New frameworks not yet wired -->
+  <div class="alert alert-blue">
+    <strong>Three entirely new frameworks (Chat, Survey, Ratings &amp; Reviews) are CEP-defined but minimally wired to GA4.</strong> This pattern is consistent with a "CEP-first, GA4-second" rollout — the event taxonomy is defined before the GA4 implementation is complete. Worth tracking as a migration backlog.
+  </div>
+
+  <!-- Ecommerce core is solid -->
+  <div class="alert alert-green">
+    <strong>The ecommerce core (Product Funnel) is the most complete and consistent area.</strong> view_item_list → view_item → select_item → add_to_cart → begin_checkout → add_shipping_info → purchase all appear in both documents with matching names. The only gap is Checkout Step Viewed (intentionally no GA4 event) and the add_payment_info asymmetry above.
+  </div>
+
+  <!-- Consent gap risk -->
+  <div class="alert alert-red">
+    <strong>4 consent/privacy events fire in production with no CEP path.</strong> Given that onetrust_consent is a global GA4 param, and the CEP framework explicitly includes it in all events, the absence of dedicated CEP events for consent_engagement, do_not_track, and dns_form_interaction is a gap worth flagging to compliance stakeholders.
+  </div>
+</div>
+
+<!-- ── Summary table ── -->
+<div class="section">
+  <div class="section-hd">
+    <h2>6 — Summary action matrix</h2>
+  </div>
+  <table class="tbl">
+    <thead>
+      <tr>
+        <th>Area</th>
+        <th>Finding</th>
+        <th>Priority</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="mono">Cart &amp; Checkout</span></td>
+        <td>9 production tags (cart_interaction, modal, shipping/payment interactions, reorder) with no CEP equivalent</td>
+        <td><span class="chip chip-red">High</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">add_payment_info</span></td>
+        <td>CEP defines it, no GTM tag exists in GA4→CEP doc. Checkout funnel is incomplete.</td>
+        <td><span class="chip chip-red">High</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">sort_by</span></td>
+        <td>Direct contradiction between docs — needs a single decision</td>
+        <td><span class="chip chip-red">High</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">Chat Interaction</span></td>
+        <td>24/27 events have no GA4 mapping — bot funnel unanalysable in GA4</td>
+        <td><span class="chip chip-amber">Medium</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">PCC flow</span></td>
+        <td>4 tags for the Customize Later journey, none in CEP</td>
+        <td><span class="chip chip-amber">Medium</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">PDP/Studio events</span></td>
+        <td>customize_view, customize_final, edit_logo, artwork_review_tool — no CEP</td>
+        <td><span class="chip chip-amber">Medium</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">Sign-In failures</span></td>
+        <td>11/12 Sign-In &amp; Account events are Segment-only — failure modes invisible in GA4</td>
+        <td><span class="chip chip-amber">Medium</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">Naming drift</span></td>
+        <td>Fly-Out event names differ between docs — cosmetic but breaks string matching</td>
+        <td><span class="chip chip-amber">Medium</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">Survey &amp; R&amp;R</span></td>
+        <td>New frameworks with 0–1 GA4 mappings — implementation backlog</td>
+        <td><span class="chip chip-amber">Medium</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">Consent &amp; Privacy</span></td>
+        <td>4 consent tags with no CEP framework — compliance-relevant gap</td>
+        <td><span class="chip chip-amber">Medium</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">pdp_interaction</span></td>
+        <td>5 tags → 1 GA4 event — ensure gtm_event_sub_name always populated</td>
+        <td><span class="chip">Low</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">file_download</span></td>
+        <td>CEP maps it; no GTM tag in GA4→CEP (likely auto-collected — document it)</td>
+        <td><span class="chip">Low</span></td>
+      </tr>
+      <tr>
+        <td><span class="mono">Experimentation</span></td>
+        <td>All 3 CEP events are Segment-only — GA4 A/B analysis requires external join</td>
+        <td><span class="chip">Low</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="foot">
+  Analysis generated June 2026 &nbsp;·&nbsp; Based on GA4→CEP (81 tags, 30 mapped) and CEP→GA4 (76 events, 27 with GA4 mapping) &nbsp;·&nbsp; 24 GA4 events confirmed in both documents
+</div>
+
+</div><!-- /.app-main -->
+<script>
+/* sidebar drawer (mobile) */
+(function(){
+  var t=document.getElementById('sbToggle'),sb=document.getElementById('appSidebar'),bd=document.getElementById('sbBackdrop');
+  if(!t||!sb||!bd)return;
+  function open(){sb.classList.add('open');bd.classList.add('show');}
+  function close(){sb.classList.remove('open');bd.classList.remove('show');}
+  t.addEventListener('click',function(){sb.classList.contains('open')?close():open();});
+  bd.addEventListener('click',close);
+  Array.prototype.forEach.call(sb.querySelectorAll('.nav-link'),function(a){a.addEventListener('click',close);});
+})();
+/* session password gate */
+(function(){
+  var KEY='schemaDocsUnlocked',gate=document.getElementById('gate');
+  if(!gate)return;
+  var unlockedAlready=false;try{unlockedAlready=sessionStorage.getItem(KEY)==='1';}catch(e){}
+  if(unlockedAlready){document.body.classList.remove('locked');if(gate.parentNode)gate.parentNode.removeChild(gate);return;}
+  document.body.classList.add('locked');
+  var pw=document.getElementById('gatePw'),btn=document.getElementById('gateBtn'),err=document.getElementById('gateErr'),card=document.getElementById('gateCard');
+  function unlock(){
+    if(pw.value==='tracking'){
+      try{sessionStorage.setItem(KEY,'1');}catch(e){}
+      document.body.classList.remove('locked');gate.classList.add('hide');
+    }else{
+      err.classList.add('show');card.classList.remove('shake');void card.offsetWidth;card.classList.add('shake');pw.value='';pw.focus();
+    }
+  }
+  btn.addEventListener('click',unlock);
+  pw.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();unlock();}});
+  pw.addEventListener('input',function(){err.classList.remove('show');});
+  setTimeout(function(){pw.focus();},60);
+})();
+</script>
+</body>
+</html>
