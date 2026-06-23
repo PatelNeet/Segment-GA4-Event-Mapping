@@ -149,19 +149,19 @@ body.locked .app-main,body.locked .app-sidebar,body.locked .sb-toggle{filter:blu
 </head>
 <body>
 <script>try{if(sessionStorage.getItem("schemaDocsUnlocked")!=="1")document.body.classList.add("locked");}catch(e){}</script>
-<button class="sb-toggle" id="sbToggle" aria-label="Toggle menu"><i class="ti ti-menu-2"></i></button>
+<button class="sb-toggle" id="sbToggle" aria-label="Toggle menu"><svg class="ti" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg></button>
 <div class="sb-backdrop" id="sbBackdrop"></div>
 <nav class="app-sidebar" id="appSidebar">
-  <div class="sb-brand"><i class="ti ti-sitemap"></i> Event Schema Docs</div>
+  <div class="sb-brand"><svg class="ti" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="6" rx="1"/><rect x="3" y="15" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><path d="M6 15v-3h12v3"/><path d="M12 9v3"/></svg> Event Schema Docs</div>
   <div class="sb-sub">CEP &harr; GA4 Tracking</div>
-  <a class="nav-link active" href="Tracking_Comparison_Analysis_CEP-GA4.html"><i class="ti ti-chart-bar"></i><span><span class="nl-t">Tracking Comparison Analysis</span><span class="nl-sub">Overview &amp; differences</span></span></a>
-  <a class="nav-link" href="CEP_GA4_Event_Mapping.html"><i class="ti ti-arrow-right"></i><span><span class="nl-t">CEP to GA4 Event Mapping</span><span class="nl-sub">CEP events &rarr; GA4</span></span></a>
-  <a class="nav-link" href="GA4_CEP_Event_Mapping.html"><i class="ti ti-arrow-left"></i><span><span class="nl-t">GA4 to CEP Event Mapping</span><span class="nl-sub">GA4 events &rarr; CEP</span></span></a>
+  <a class="nav-link active" href="Tracking_Comparison_Analysis_CEP-GA4.html"><svg class="ti" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V12"/><path d="M10 20V5"/><path d="M16 20v-9"/><path d="M3 20h18"/></svg><span><span class="nl-t">Tracking Comparison Analysis</span><span class="nl-sub">Overview &amp; differences</span></span></a>
+  <a class="nav-link" href="CEP_GA4_Event_Mapping.html"><svg class="ti" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6l-6 6"/></svg><span><span class="nl-t">CEP to GA4 Event Mapping</span><span class="nl-sub">CEP events &rarr; GA4</span></span></a>
+  <a class="nav-link" href="GA4_CEP_Event_Mapping.html"><svg class="ti" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M11 18l-6 -6l6 -6"/></svg><span><span class="nl-t">GA4 to CEP Event Mapping</span><span class="nl-sub">GA4 events &rarr; CEP</span></span></a>
   <div class="sb-foot">Protected &middot; CEP &lt;&gt; GA4 Implementation</div>
 </nav>
 <div id="gate" class="gate">
   <div class="gate-card" id="gateCard">
-    <div class="gate-ic"><i class="ti ti-lock"></i></div>
+    <div class="gate-ic"><svg class="ti" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
     <h2>Protected document</h2>
     <p>Enter password to view the event schema documentation to track in GA4 &amp; Segment.</p>
     <input type="password" id="gatePw" placeholder="Password" autocomplete="off">
@@ -176,11 +176,11 @@ body.locked .app-main,body.locked .app-sidebar,body.locked .sb-toggle{filter:blu
   <div class="hdr-top">
     <div>
       <h1>CEP ↔ GA4 Mapping — Comparison Analysis</h1>
-      <p class="meta">Cross-referencing GA4→CEP (81 tags) and CEP→GA4 (76 events) &nbsp;·&nbsp; June 2026</p>
+      <p class="meta">Cross-referencing GA4→CEP (81 tags) and CEP→GA4 (73 events) &nbsp;·&nbsp; June 2026</p>
     </div>
     <div class="badges">
       <span class="badge" style="background:var(--blue-bg);color:var(--blue)">GA4→CEP: 81 tags</span>
-      <span class="badge" style="background:var(--purple-bg);color:var(--purple)">CEP→GA4: 76 events</span>
+      <span class="badge" style="background:var(--purple-bg);color:var(--purple)">CEP→GA4: 73 events</span>
     </div>
   </div>
 </div>
@@ -188,15 +188,15 @@ body.locked .app-main,body.locked .app-sidebar,body.locked .sb-toggle{filter:blu
 <!-- ── Scorecards ── -->
 <div class="cards">
   <div class="card" style="border-color:var(--green-bdr)">
-    <div class="card-n" style="color:var(--green)">24</div>
+    <div class="card-n" style="color:var(--green)">32</div>
     <div class="card-l">GA4 events confirmed in both docs — the solid mapped core</div>
   </div>
   <div class="card" style="border-color:var(--red-bdr)">
-    <div class="card-n" style="color:var(--red)">51</div>
+    <div class="card-n" style="color:var(--red)">42</div>
     <div class="card-l">Production GTM tags with <strong>no CEP equivalent</strong> whatsoever</div>
   </div>
   <div class="card" style="border-color:var(--amber-bdr)">
-    <div class="card-n" style="color:var(--amber)">49</div>
+    <div class="card-n" style="color:var(--amber)">33</div>
     <div class="card-l">CEP events with <strong>no GA4 mapping</strong> defined yet</div>
   </div>
   <div class="card" style="border-color:var(--purple-bdr)">
@@ -316,7 +316,7 @@ body.locked .app-main,body.locked .app-sidebar,body.locked .sb-toggle{filter:blu
   <div style="background:var(--bg-2);border-radius:var(--rl);padding:16px;border:.5px solid var(--bdr);margin-bottom:1rem">
 
     <div class="prog-wrap">
-      <div class="prog-label"><span>Chat Interaction</span><span style="color:var(--red)">3 / 27 mapped (11%)</span></div>
+      <div class="prog-label"><span>Chat Interaction</span><span style="color:var(--red)">1 / 1 mapped (100%)</span></div>
       <div class="prog-bar"><div class="prog-fill" style="width:11%;background:var(--red)"></div></div>
     </div>
 
@@ -362,7 +362,7 @@ body.locked .app-main,body.locked .app-sidebar,body.locked .sb-toggle{filter:blu
   </div>
 
   <div class="alert alert-red">
-    <strong>Chat Interaction is the biggest GA4 blind spot.</strong> 27 CEP events defined, only 3 have GA4 mappings (session started, user message, chat closed). The other 24 — including all feedback loops, escalation, flow steps, CTA views, and privacy consent — are invisible in GA4. This makes it impossible to measure bot funnel conversion or session quality in GA4.
+    <strong>Chat Interaction is now fully consolidated.</strong> The framework was simplified to a single <em>Chat Initiated</em> event that maps 1:1 to the GA4 <code>chat_interaction</code> event — the earlier ~27 granular chat sub-events are no longer separate CEP events (action detail is carried in the <code>label</code> property). GA4 therefore receives one coarse-grained chat signal, with action-level detail living in Segment/BQ.
   </div>
 
   <div class="alert alert-amber">
@@ -524,7 +524,7 @@ body.locked .app-main,body.locked .app-sidebar,body.locked .sb-toggle{filter:blu
 </div>
 
 <div class="foot">
-  Analysis generated June 2026 &nbsp;·&nbsp; Based on GA4→CEP (81 tags, 30 mapped) and CEP→GA4 (76 events, 27 with GA4 mapping) &nbsp;·&nbsp; 24 GA4 events confirmed in both documents
+  Analysis generated June 2026 &nbsp;·&nbsp; Based on GA4→CEP (81 tags, 30 mapped) and CEP→GA4 (73 events, 27 with GA4 mapping) &nbsp;·&nbsp; 24 GA4 events confirmed in both documents
 </div>
 
 </div><!-- /.app-main -->
