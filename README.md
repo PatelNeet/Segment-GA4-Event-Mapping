@@ -9,4 +9,6 @@ Website link -
 
 [GA4_to_CEP_Event_Mapping](https://patelneet.github.io/Segment-GA4-Event-Mapping/CEP%3C%3EGA4-Implementation/GA4_CEP_Event_Mapping.html)
 
+![Uploading image.png…]()
+
 tracking
