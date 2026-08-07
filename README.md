@@ -10,6 +10,7 @@ Website link -
 
 [GA4_to_CEP_Event_Mapping](https://patelneet.github.io/Segment-GA4-Event-Mapping/CEP%3C%3EGA4-Implementation/GA4_CEP_Event_Mapping.html)
 
- <img width="1652" height="865" alt="image" src="https://github.com/user-attachments/assets/43a49f4e-0954-430c-a66f-a713e8b546df" />
+ <img width="1645" height="869" alt="image" src="https://github.com/user-attachments/assets/f512cd9d-05c6-4cc8-941b-b787cabec6b3" />
+
  
 tracking
