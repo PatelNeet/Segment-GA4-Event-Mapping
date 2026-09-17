@@ -12,5 +12,9 @@ Website link -
 
 <img alt="image" src="https://github.com/user-attachments/assets/e42f8989-fd39-46f8-a616-42316291be77" />
 
+Tracking Overview
+CEP Event List
+Estore GA4 to CEP Event Mapping
+POC GA4 to CEP Event Mapping
  
 tracking
